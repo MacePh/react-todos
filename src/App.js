@@ -15,14 +15,25 @@ function App() {
   )
 
   const addTodo = (description, assigned) => {
+    let rowNumber = 0;
     if (todos.length > 0) {
-      const newTodo = {
-        rowNumber: todos.length + 1,
-        rowDescription: description,
-        rowAssigned: assigned
-      };
-      setTodos(todos=> [...todos, newTodo]);
+      rowNumber = todos[todos.length - 1].rowNumber + 1;
+    } else {
+      rowNumber = 1;
     }
+        const newTodo = {
+          rowNumber: rowNumber,
+          rowDescription: description,
+          rowAssigned: assigned
+        };
+        setTodos(todos=> [...todos, newTodo]);
+  }
+
+  const deleteTodo = (deleteTodoRowNumber) => {
+    let filtered = todos.filter(function (value) {
+      return value.rowNumber !== deleteTodoRowNumber;
+    });
+    setTodos(filtered);
   }
     
   return (
@@ -32,8 +43,8 @@ function App() {
           Your Todo's
         </div>
         <div className="card-body">
-          <TodoTable todos={todos} />
-          <button className='btn btn-primary'onClick={addTodo}>
+          <TodoTable todos={todos} deleteTodo={deleteTodo} />
+          <button className='btn btn-primary'>
             Add new Todo
           </button>
           <NewTodoForm addTodo={addTodo} />
