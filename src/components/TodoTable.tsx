@@ -1,7 +1,7 @@
 import React from "react"
 import TodoRowItem from "./TodoRowItem"
 
-function TodoTable(props) {
+function TodoTable(props: {todos: TodoModel[], deleteTodo: Function}) {
     return (
         <table className="table table-hover">
             <thead>
